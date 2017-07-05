@@ -1,0 +1,31 @@
+jdistaso
+Justin Distaso
+
+Compile both files with make
+
+Usage:
+
+minls [ -v ] [ -p part [ -s subpart ] ] imagefile [ path ]
+Minls lists a file or directory on the given filesystem image. If the optional
+path argument is ommitted it defaults to the root directory.
+
+minget [ -v ] [ -p part [ -s subpart ] ] imagefile srcpath [ dstpath ]
+Minget copies a regular file from the given source path to the given destination
+path. If the destination path is ommitted, it copies to stdout.
+
+Using undefined syntax will lead to undefined results.
+
+-----------Excuses here-----------
+Didnt pass as many tests as I would have liked to, but I have many finals to
+study for. 
+
+HOWEVER it is better than it seems, most of my diff failures
+look to be due to the same one small bug, that some kind of non-printing / 
+appears in binary file difference due to the way zeros are being put into the
+output. 
+
+Also some intersting heap corruption causing malloc and fread to fail, Which
+made me glad I put in so many systemcall verifier blocks! I always get
+marked down for those so I put a ton in this program. 
+
+-Have Mercy and Happy Holidays :)

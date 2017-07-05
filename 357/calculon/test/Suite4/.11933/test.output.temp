@@ -1,0 +1,2 @@
+diffoutput  ls.out  OK.c       test15.out  test9.out
+ls.c	    OK	    test15.in  test9.in    test.output.temp

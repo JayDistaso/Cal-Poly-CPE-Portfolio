@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "Running script"
+gcc smake.c smake.h
+echo "gcc ran"
+./a.out < in.txt > out.txt
+echo "Ran the .out file"
+echo "running staley"
+~grade-cstaley/357/SMake/32Bit/smake > correctout.txt
+
+diff -bw out.txt correctout.txt
+
+echo "done" 

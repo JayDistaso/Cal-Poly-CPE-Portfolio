@@ -1,0 +1,283 @@
+#include "lwp.h"
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <limits.h>
+
+/*Max number of processes*/
+#define PROC_LIMIT (ULONG_MAX - 2)
+
+/*Number of extra words in allocated stack as well as size of safe stack*/
+#define STACKSIZE_EXTRA 1024
+
+/*This is the context starting the lwp system*/
+static context originalContext;
+
+/*Safe stack so we can free stack we are on*/
+static unsigned long *safeStack;
+
+/*tid of process running, 0 is orignContext*/
+static tid_t tidRunning = 0;
+
+/*This is the rootThread used by library for keeping track of procs*/
+static thread rootThread;
+
+/*Initalizes Round Robin sched*/
+static struct scheduler RoundRobin = {NULL, NULL, rr_admit, 
+ rr_remove, rr_next};
+
+/*The lwp system current scedueler*/ 
+static scheduler currentScheduler = &RoundRobin;
+
+/*Used by schedueler to keep track of scheds*/
+static thread rootOfSched = NULL;
+
+/*How many running procs we have*/
+static unsigned long numberOfProcs = 0;
+
+/*create a new LWP*/
+tid_t lwp_create(lwpfun func, void *arg, size_t stacksize) {
+   static int tid = 1; //keep track of asigning tids
+   /*unsigned long will hold 64 bits on our 64 bit machine*/
+   unsigned long *stack; 
+   
+   unsigned long *stackPointer;
+   unsigned long *retPtr;
+   
+   if (tid >= PROC_LIMIT || stacksize < 0) {/*error checking*/
+      return -1;
+   }
+   
+   stack = calloc(stacksize + STACKSIZE_EXTRA, sizeof(unsigned long));
+   
+   if (!stack) {
+      return -1;
+   }
+
+   /*init new context*/   
+   context *newContext = (context *)calloc(1, sizeof(context));  
+   numberOfProcs++;
+   newContext->tid = tid++;
+   newContext->stack = stack;
+   newContext->stacksize = stacksize + STACKSIZE_EXTRA;
+   newContext->state.fxsave=FPU_INIT;
+   stackPointer = newContext->stack + stacksize + STACKSIZE_EXTRA;
+
+   /*Setup stack*/
+   stackPointer--;
+   *stackPointer = (unsigned long)lwp_exit;
+   retPtr = stackPointer;
+   stackPointer--;
+   *stackPointer = (unsigned long)func;
+   stackPointer--;
+   *stackPointer = (unsigned long)retPtr; 
+   
+   newContext->state.rbp = (unsigned long)stackPointer;
+   newContext->state.rsp = (unsigned long)stackPointer;
+
+   /*set register to argument like calling convention*/
+   newContext->state.rdi = (unsigned long)arg; 
+   
+   currentScheduler->admit(newContext);
+   
+   /*Add to linked list of threads*/
+   thread temp = rootThread;
+   if (!rootThread) {
+      rootThread = newContext;
+   }
+   else {
+      while (temp->lib_one) {
+         temp = temp->lib_one;
+      }
+      temp->lib_one = newContext;
+   }
+   return newContext->tid;
+}
+
+/*terminates the calling LWP*/
+void lwp_exit(void) {
+
+   unsigned long *stackToBeFreed = (tid2thread(tidRunning))->stack;
+   thread contextToBeFreed = tid2thread(tidRunning);
+   SetSP(safeStack + STACKSIZE_EXTRA - 1);
+   lwp_exitOntoSafeStack(contextToBeFreed, stackToBeFreed);
+}
+
+/*Helps setup nice stack frame so we can free old stack*/
+void lwp_exitOntoSafeStack(thread contextToBeFreed, unsigned 
+ long *stackToBeFreed) {
+
+   currentScheduler->remove(contextToBeFreed);
+   thread temp = rootThread;
+   /*Setup modified linked list of threads*/
+   if (rootThread == contextToBeFreed) {
+      rootThread = rootThread->lib_one;
+   }
+   else {
+      while (temp && temp->lib_one) {
+         if (temp->lib_one == contextToBeFreed) {
+            temp->lib_one = (temp->lib_one)->lib_one;
+         }
+         else {
+            temp = temp->lib_one;
+         }
+      }
+   }
+   temp = currentScheduler->next(); 
+   free(stackToBeFreed);
+   free(contextToBeFreed);
+      
+   numberOfProcs--;
+   if (!numberOfProcs) {
+      lwp_stop();
+      return;
+   }
+   tidRunning = temp->tid;
+   load_context(&(temp->state));
+}
+
+/*return thread ID of the calling LWP*/
+tid_t lwp_gettid(void) {
+   return tidRunning;
+}
+
+/*yield the CPU to another LWP*/
+void lwp_yield(void) {
+   if (tidRunning == 0) {
+      return;
+   }
+   thread temp = currentScheduler->next();
+   if (temp) {
+      context_switch(tid2thread(tidRunning), temp); 
+   }
+   else {
+      lwp_stop();
+   }
+}
+
+/*start the LWP system*/
+void lwp_start(void) {
+   originalContext.tid = 0;
+
+   free(safeStack);
+   safeStack = calloc(STACKSIZE_EXTRA, sizeof(unsigned long));
+   if (tidRunning || !numberOfProcs) { 
+   //System is already running or there is nothing to run
+      return;
+   }
+   thread temp = currentScheduler->next();
+   if (temp) {
+      context_switch(&originalContext, temp); 
+   }
+}
+
+/*Stops the LWP system*/
+void lwp_stop(void) {
+   if (!tidRunning) {//this means the system is already stopped
+      return;
+   }
+   context_switch(tid2thread(tidRunning), &originalContext);
+}
+
+/*install a new scheduling function*/
+void lwp_set_scheduler(scheduler fun) {
+   int i;
+   thread temp;
+   if (fun->init) {
+     fun->init();
+   }
+   //for (i = 0; i < numberOfProcs; i++) {
+   while (temp = currentScheduler->next()) {
+      //temp = currentScheduler->next();
+      currentScheduler->remove(temp);
+      fun->admit(temp);   
+   }
+   rootOfSched = NULL;  
+   if (currentScheduler->shutdown) {
+      currentScheduler->shutdown();
+   }
+   currentScheduler = fun;
+}
+
+/*find out what the current scheduler is*/
+scheduler lwp_get_scheduler(void) {
+   return currentScheduler;
+}
+
+/*map a thread ID to a context*/
+thread tid2thread(tid_t tid) {
+
+   if (tid < 1) {
+      return NO_THREAD;
+   }
+   thread temp = rootThread;
+   while (temp) {
+      if (temp->tid == tid) {
+         return temp;
+      }
+      else {
+         temp = temp->lib_one;
+      }
+   }
+   
+   return NO_THREAD; //address of a context is pointer to context aka a th
+}
+
+/*Returns next thread using round robin sched*/
+thread rr_next() {
+   thread temp = tid2thread(tidRunning);
+   if (!temp) {
+      if (rootThread) {
+         return rootThread;
+      }
+      return NO_THREAD;
+   }
+   if (temp->sched_one) {
+      return temp->sched_one;
+   }
+   else {
+      return rootThread;
+   }
+}
+
+/*Adds thread to rr sched*/
+void rr_admit(thread new) {
+   if (!rootOfSched) {
+      rootOfSched = new;
+   }
+   else {
+      new->sched_two = rootOfSched;
+      rootOfSched->sched_one = new;
+      rootOfSched = new;
+   }
+}
+
+/*removes thread from rr sched*/
+void rr_remove(thread victim) {
+   thread temp = victim->sched_two;
+   if (temp) {
+      temp->sched_one = victim->sched_one;
+   }
+   temp = victim->sched_one;
+   if (temp) {
+      temp->sched_two = victim->sched_two;
+   }
+   if (victim == rootOfSched) {
+      rootOfSched = victim->sched_two;
+   }
+   if (victim == rootThread) {
+      rootThread = rootThread->lib_one;
+   }
+}
+
+/*Helps setup call to swap_rfiles*/
+void context_switch(context *sourceContext, context *destinationContext) {
+   tidRunning = destinationContext->tid;
+   if (!sourceContext) {
+      swap_rfiles(NULL, &(destinationContext->state));
+   }
+   else {
+      swap_rfiles(&(sourceContext->state), &(destinationContext->state));
+   }
+}

@@ -1,0 +1,27 @@
+Noon Lab
+Justin Distaso
+Program 3
+Spring 2017
+Prof: Hugh Smith
+
+to make both files run command
+make both
+
+Usage is as described in specs
+
+jdistaso 
+Flags:
+0 - Unused
+1 - Setup first packet sent by client
+2 - SETUP_RESPONSE  first packet sent by server
+3 - Data
+4 - UNUSED
+5 - ACK
+6 - SREJ
+7 - FNAME
+8 - FNAME_OK
+9 - FNAME_BAD
+10 - EOF
+11 - EOF_ACK
+-1 - CRC_ERROR
+ 

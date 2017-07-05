@@ -1,0 +1,75 @@
+import java.util.ArrayList;
+// Feel free to add any other imports
+import java.lang.Math; 
+import java.util.*;
+public class Inversions
+{
+   //vars here
+   private int[] array;
+   private int[]tempMergeArr;
+   private int length;
+   public int inversions = 0;
+   
+   public int invCounter(int[] ranking) //prob could combined sort and this
+   {
+      sort(ranking);
+      return inversions;
+   }
+   private void sort(int input[]) //takes array and sorts
+   {
+      array=input;
+      length=input.length;
+      tempMergeArr=new int[length];
+      MergeSort(0, length -1);
+   }
+   private void MergeSort(int low, int high) //recursive mergesort
+   {
+      if(low<high)
+      {
+         int middle = low + (high-low) /2; 
+         MergeSort(low,middle); //sort left half
+         MergeSort(middle+1, high); //sort right half
+         mergeParts(low,middle,high); //merge the parts
+      }
+   }
+   private void mergeParts(int low, int middle, int high) //Merges parts + counts inversions
+   {
+      for(int i=low; i<= high; i++)
+      {
+         tempMergeArr[i] = array[i]; //put array in temp array given bounds
+      }
+      int i=low;
+      int j=middle;
+      int k=low;
+      while(i<= middle -1 && j<=high)
+      {
+         if(tempMergeArr[i] <= tempMergeArr[j]) //adding from left half of list
+         {
+            array[k] = tempMergeArr[i];
+            i++; //move up left side
+         }
+         else //adding from right side
+         {
+            array[k] = tempMergeArr[j]; 
+            j++; //move up right side
+            inversions++; //if we are adding from right side it's an inversion!
+         }
+         k++; //array is ready for next element
+      }
+      while(i<= middle -1) //add rest of left list
+      {
+         array[k] = tempMergeArr[i];
+         k++;
+         i++;
+	 inversions++;
+      }
+      while(j <=high)
+      {
+         array[k] = tempMergeArr[j];
+         k++;
+         j++;
+	 //inversions++; //adding from right side is an inversion
+      }
+   }
+   
+}

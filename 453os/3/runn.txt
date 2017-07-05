@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "running script"
+rm libPLN.a
+make allclean
+make libPLN.a
+make all
+./nums

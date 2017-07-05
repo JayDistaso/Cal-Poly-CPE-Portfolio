@@ -1,0 +1,37 @@
+USERNAME: jdistaso
+Justin Distaso 10/24/16 11:48pm
+
+To make use 
+$make liblwp.so
+
+It seems the sched has some problems switching over. If only I had the
+budget to fix.
+
+*rant* 
+After having so many problems getting context_switch to work, going from
+not switching to this is one day with 8 hrs of class is not too bad
+as far as I am concerned. Should I have done more earlier? Of course :)
+*end rant*
+
+
+To compile the three test programs, be sure to link them with the 
+appropriate libraries:
+
+  threaded counting:
+
+    gcc -o nums numbersmain.c -L. -lPLN -lsnakes
+
+  hungrysnakes:
+
+    gcc -o hs hungrymain.c -L. -lPLN -lsnakes -lncurses
+
+  randomsnakes:
+
+    gcc -o rs snakemain.c -L. -lPLN -lsnakes -lncurses
+
+Each of the snake programs installs signal handlers such that
+SIGINT (^C) will kill a snake, and SIGQUIT (^\) will terminate
+threading.
+
+
+

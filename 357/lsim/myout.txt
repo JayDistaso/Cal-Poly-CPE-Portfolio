@@ -1,0 +1,15 @@
+Result from 0, step 0, 100.000
+Result from 0, step 1, 100.000
+Result from 0, step 2, 100.000
+Result from 1, step 0, 0.000
+Result from 3, step 0, 0.000
+Result from 4, step 0, -100.100
+Result from 4, step 1, -100.100
+Result from 4, step 2, -100.100
+Result from 2, step 0, 0.000
+Result from 1, step 1, 50.000
+Result from 3, step 1, -50.050
+Result from 2, step 1, 0.000
+Result from 1, step 2, 50.000
+Result from 3, step 2, -50.050
+Result from 2, step 2, -0.025

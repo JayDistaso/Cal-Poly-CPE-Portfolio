@@ -1,0 +1,6 @@
+lwp64.o
+util64.o
+magic64.o
+rr64.o
+tid64.o
+ss64.o

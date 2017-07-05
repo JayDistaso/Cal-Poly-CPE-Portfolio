@@ -1,0 +1,274 @@
+=================================================
+TEST 13: Three lwps.  Stop, then restart
+
+This test spawns a three threads each of which stops and restarts
+several times.
+
+
+----------
+Reference:
+----------
+Starting LWPs...
+Test
+Test
+Test
+Test2
+Test2
+Test2
+Test3
+Test3
+Test3
+Test4
+Test4
+Test4
+Test5
+Test5
+Test5
+Test6
+Test6
+Test6
+Done.
+----------
+Submitted:
+----------
+Starting LWPs...
+Test
+Test2
+Test
+Test3
+Test4
+Test2
+Test
+Test5
+Test3
+Test6
+Test4
+Test2
+Test5
+Test3
+Test6
+Test4
+Test5
+Test6
+Done.
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+3,5d2
+< Test
+< Test
+< Test2
+7,9c4
+< Test2
+< Test3
+< Test3
+---
+> Test
+12,15c7,8
+< Test4
+< Test4
+< Test5
+< Test5
+---
+> Test2
+> Test
+16a10
+> Test3
+17a12,15
+> Test4
+> Test2
+> Test5
+> Test3
+18a17,18
+> Test4
+> Test5
+---------
+=================================================
+TEST 18: 1024 threads, random exit.
+
+Creat 1024 threads, each of which either yields or exits randomly until
+a counter reaches a given value.
+
+
+
+
+----------
+Reference:
+----------
+Spawining 4096 threads.
+Done.  Count is 50000. (Yielded 406869 times)
+----------
+Submitted:
+----------
+^C
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,2c1
+< Spawining 4096 threads.
+< Done.  Count is 50000. (Yielded 406869 times)
+---
+> ^C
+\ No newline at end of file
+---------
+=================================================
+TEST 21: Transfer threads between schedulers (stopped)
+
+Create a number of threads, then set_scheduler() and see if 
+they transfer properly.
+
+
+
+
+
+----------
+Reference:
+----------
+Creating LWPS
+Setting the scheduler.
+Launching LWPS
+    1
+         2
+              3
+                   4
+                        5
+         2
+              3
+                   4
+                        5
+              3
+                   4
+                        5
+                   4
+                        5
+                        5
+Back from LWPS.
+----------
+Submitted:
+----------
+Child process (14043) exited due to SIGSEGV.
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,19c1
+< Creating LWPS
+< Setting the scheduler.
+< Launching LWPS
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<          2
+<               3
+<                    4
+<                         5
+<               3
+<                    4
+<                         5
+<                    4
+<                         5
+<                         5
+< Back from LWPS.
+---
+> Child process (14043) exited due to SIGSEGV.
+---------
+=================================================
+TEST 22: Transfer threads between schedulers (live)
+
+Create a number of threads, start them running,
+then set_scheduler() and see if they transfer properly.
+
+
+
+
+
+----------
+Reference:
+----------
+Creating LWPS
+Launching LWPS
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+                        5
+Setting the scheduler.
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+                        5
+    1
+         2
+              3
+                   4
+                        5
+Back from LWPS.
+----------
+Submitted:
+----------
+Child process (14065) exited due to SIGSEGV.
+
+---------------------------------
+Differences (< reference > output)
+---------------------------------
+
+1,34c1
+< Creating LWPS
+< Launching LWPS
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<                         5
+< Setting the scheduler.
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<                         5
+<     1
+<          2
+<               3
+<                    4
+<                         5
+< Back from LWPS.
+---
+> Child process (14065) exited due to SIGSEGV.
+---------

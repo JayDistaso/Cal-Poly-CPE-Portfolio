@@ -1,0 +1,225 @@
+
+//
+//above is .h file
+//
+//Fix for pointer arithmatic probs
+#include "malloc.h"
+
+void *calloc(size_t nmemb, size_t size) {
+   const size_t totalSize = nmemb * size;
+   char debugMessage[100];
+   
+   if (totalSize <= 0) {
+      return NULL;
+   }
+   
+   void *ptr = malloc(totalSize);
+   
+   //0 out mallocd memory
+   if (ptr) {
+      memset(ptr, 0, totalSize);
+   }
+   
+   if (getenv(DEBUG_VAR) != NULL) {
+		snprintf(debugMessage, 100, "MALLOC: calloc(%zd,%zd) => (ptr=%p, size=%zd)\n", nmemb, size, ptr, totalSize);
+		fputs(debugMessage, stderr);
+	}
+   
+   return ptr;
+}
+
+void *malloc(size_t size) {
+   Header *chunk;
+   char debugMessage[100];
+   
+   if (size <= 0) {
+      return NULL;
+   }
+   
+   if (!rootOfLinkedList) {//inital call
+      alignChunk(); //start out fake break at alligned memory
+      chunk = newChunk(NULL, size); //this is the chunk we cut off to return
+      if (!chunk) {
+         return NULL; //failed call
+      }
+      rootOfLinkedList = chunk;
+   }
+   else {
+      struct Header *last = rootOfLinkedList;
+      chunk = find_Free_Chunk(&last, size); //see if we have free chunk before getting a new one
+      if (!chunk) {
+         chunk = newChunk(last, size);
+         if (!chunk) {
+            return NULL;//call failed, so call to move break failed
+         }
+      }
+      else {
+         chunk->isFree = 0;
+      }
+   }
+   if (getenv(DEBUG_VAR) != NULL) {
+		snprintf(debugMessage, 100, "MALLOC: malloc(%zd) => (ptr=%p, size=%zd)\n", size, chunk->startOfData, size);
+		fputs(debugMessage, stderr);
+	}
+   return chunk->startOfData;
+}
+void free(void *ptr) {
+   char debugMessage[100];
+   
+   if (!ptr) {
+      return;
+   }
+   
+   Header *current = rootOfLinkedList;//walk through linked list searching for which chunk this ptr belongs to
+   Header *last = NULL;
+   Header *next = NULL;
+   while (current) {
+      if ((ptr >= current->startOfData) && (ptr <= current->startOfData + current->size)) 
+/*see if ptr value is in a chunk of allocd memory*/
+      {
+         current->isFree = 1;
+         if ((current->nextChunk) && (current->nextChunk)->isFree) { //merge next chunk with current if free
+            next = current->nextChunk;
+            current->nextChunk = next->nextChunk;
+            current->size += next->offset + next->size + HEADER_SIZE;
+         }
+         if (last && last->isFree) { //merge current to last chunk if free
+            last->nextChunk = current->nextChunk;
+            last->size += current->offset + current->size + HEADER_SIZE;
+         }
+
+         break;
+         //current = NULL; if break dosent work
+      }
+      else { //keep walking list
+         last = current;
+         current = current->nextChunk;     
+      }
+   }
+   if (getenv(DEBUG_VAR) != NULL) {
+		snprintf(debugMessage, 100, "MALLOC: free(%p)\n", ptr);
+		fputs(debugMessage, stderr);
+	}
+}
+
+void *realloc(void *ptr, size_t size) {
+   char debugMessage[100];
+   
+   if (!ptr) {//NULL ptr is like malloc call
+      return malloc(size);
+   }
+   if (size == 0) { //size 0 is like free call
+      free(ptr);
+   }
+   
+   Header *current = rootOfLinkedList;
+   Header *next = NULL;
+   
+   while (current) {
+      if ((ptr >= current->startOfData) && (ptr <= current->startOfData + current->size)) { //find ptr corrosponding to allocd memory
+         break;
+      }
+      current = current->nextChunk;
+   }
+   if (!current) { //the ptr passed in was not alloced so it is not valid
+      return NULL;
+   }
+   
+   if (current->size >= size) {
+      return current;
+   }
+   
+   if ((current->nextChunk) && (current->nextChunk)->isFree) {
+/*realloc is called and there is a free chunk adjecent in memory so we add it on*/ 
+      next = current->nextChunk;
+      if (current->size + next->size >= size) {
+         current->nextChunk = next->nextChunk;
+         current->size += next->offset + next->size + HEADER_SIZE;
+      }
+      return current;
+   }
+   
+   
+   void *new_ptr = malloc(size);
+   if (!new_ptr) {
+      return NULL;
+   }
+   memcpy(new_ptr, current->startOfData, current->size);
+   free(current->startOfData);
+   
+   if (getenv(DEBUG_VAR) != NULL) {
+		snprintf(debugMessage, 100, "MALLOC: realloc(%p,%zd) => (ptr=%p, size=%zd)\n", ptr, size, ptr, size);
+		fputs(debugMessage, stderr);
+	}
+   return new_ptr; 
+   
+}
+void alignChunk() { //waste of 0-15 bytes
+   void *breakLocation = sbrk(0);
+   if ((uintptr_t)breakLocation % ALIGNED_NUMBER != 0) {
+      breakLocation = sbrk(ALIGNED_NUMBER - ((uintptr_t)breakLocation % ALIGNED_NUMBER)); //so it will be divisible by 16
+      if ((breakLocation == (void*) - 1)) { //checking if srbrk cll was good
+         errno = ENOMEM; 
+      }
+   }
+   myBreak = sbrk(0);
+   if ((myBreak == (void*) - 1)) { //checking if srbrk cll was good
+      errno = ENOMEM; 
+   }
+}
+
+int moveBreak() {
+   void *sbrkCheck;
+   sbrkCheck = sbrk(0);
+   void *newBreakReturn = sbrk(DEFAULT_CHUNK);
+   if (sbrkCheck != newBreakReturn || (newBreakReturn == (void*) - 1)) { //checking if srbrk cll was good
+      return 0;   
+      errno = ENOMEM;
+   }
+   unchunkedSpace += DEFAULT_CHUNK;
+   return 1;
+}
+
+
+struct Header *newChunk(struct Header *last, size_t size) {
+   Header *chunk;
+   char *ptrMath;
+   int offset = 0;
+   while (size + HEADER_SIZE + ALIGNED_NUMBER > unchunkedSpace) {
+      if (!moveBreak()) {
+         return NULL; //break move failed
+      }
+   }
+   chunk = ((Header *)myBreak);
+   myBreak += size + HEADER_SIZE;
+   if ((uintptr_t)myBreak % ALIGNED_NUMBER != 0) {
+      offset = (ALIGNED_NUMBER - ((uintptr_t)myBreak % ALIGNED_NUMBER));
+      ptrMath = (char *) myBreak;
+      ptrMath += offset; //so it will be allighned
+      myBreak = (void *)ptrMath;
+   }
+   
+   if (last) {
+      last->nextChunk = chunk;
+   }
+   
+   unchunkedSpace -= size + HEADER_SIZE + offset;
+   
+   chunk->size = size;
+   chunk->offset = offset;
+   chunk->nextChunk = NULL;
+   chunk->isFree = 0;
+   chunk->startOfData = myBreak - size; 
+   
+   return chunk;
+    
+}
+
+struct Header *find_Free_Chunk(struct Header **last, size_t size) {
+   Header *current = rootOfLinkedList;
+   while (current && ((!current->isFree) || (current->size < size))) {
+      *last = current;
+      current = current->nextChunk;
+   }
+   return current;
+}

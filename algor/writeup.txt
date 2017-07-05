@@ -1,0 +1,18 @@
+INPUTT: (-2 * 101) / (101 * -2)
+myadd function runs 
+7, 67 
+y=9x+3
+add INST TOTAL: 66, 606
+mymult INSTRUCTIONS RAN 
+53, 344 
+y=x+8
+mult INST TOTAL
+61, 352
+
+totals 
+107, 958
+
+The total is a lot more in the second case because -2 is 0xFE in signed binary. 
+When -2 is the multiplier the program has to do a lot more adds, and 
+when it is in the add function it must be ran more times since the number
+of ones is corralated with the number of times ran. 

@@ -1,0 +1,2 @@
+Usage: LinearSim C S L R (in any order)
+Your program exited with nonzero code 1

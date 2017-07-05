@@ -1,0 +1,13 @@
+Justin Distaso
+Due 4/16/17 at 11:55pm
+
+Usage
+./trace filename.pcap
+
+Using in other ways could lead to unintended results
+
+Testing script named runn.txt
+makes file, runs with files provided and diffs
+
+captured files named cap1.pcapng and cap2.pcapng
+Output for files named cap1.out and cap2.out

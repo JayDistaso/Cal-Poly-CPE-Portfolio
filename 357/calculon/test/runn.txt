@@ -1,0 +1,128 @@
+#!/bin/bash
+echo "Running script"
+echo "Scrubbing carriage returns"
+tr -d '\r' < Calculon.c > CalculonClean
+tr -d '\r' < CalculonClean > Calculon.c
+tr -d '\r' < Calculon.h > CalculonCleanh
+tr -d '\r' < CalculonCleanh > Calculon.h
+make
+echo "Made"
+cp Calculon ./Suite1/Calculon
+cp Calculon ./Suite2/Calculon
+cp Calculon ./Suite3/Calculon
+cp Calculon ./Suite4/Calculon
+cp Calculon ./Suite5/Calculon
+cp Calculon ./Suite6/Calculon
+cp Calculon ./Suite7/Calculon
+cp Calculon ./Suite8/Calculon
+
+
+echo "Running User tests"
+echo "--------------------"
+cd Suite1
+echo "Testing Suite 1"
+/home/grade-cstaley/bin/warden/SafeRun -p30 ./Calculon Suite1.suite < /dev/null &> ../o1
+
+cd ../Suite2
+echo "Testing Suite 2"
+/home/grade-cstaley/bin/warden/SafeRun -p30 ./Calculon Suite2.suite < /dev/null &> ../o2
+
+cd ../Suite3
+echo "Testing Suite 3"
+/home/grade-cstaley/bin/warden/SafeRun -p30 ./Calculon Suite3.suite < /dev/null &> ../o3
+
+cd ../Suite4
+echo "Testing Suite 4"
+/home/grade-cstaley/bin/warden/SafeRun -p30 ./Calculon Suite4.suite < /dev/null &> ../o4
+
+cd ../Suite5
+echo "Testing Suite 5"
+/home/grade-cstaley/bin/warden/SafeRun -p30 ./Calculon Suite5.suite < /dev/null &> ../o5
+
+cd ../Suite6
+echo "Testing Suite 6"
+/home/grade-cstaley/bin/warden/SafeRun -p30 ./Calculon Suite6.suite < /dev/null &> ../o6
+
+cd ../Suite7
+echo "Testing Suite 7"
+/home/grade-cstaley/bin/warden/SafeRun -p30 ./Calculon Suite7.suite < /dev/null &> ../o7
+
+cd ../Suite8
+echo "Testing Suite 8"
+/home/grade-cstaley/bin/warden/SafeRun -p30 ./Calculon Suite8.suite < /dev/null &> ../o8
+
+cd ../
+
+echo "End User Tests"
+echo "-----------------------------------------------------"
+
+
+echo ""
+echo "starting diff process"
+
+echo "diff1 results:---------------"
+echo ""
+diff -bw -a o1 Suite1.out
+echo ""
+echo "end diff1---------------"
+
+echo "diff2 results:---------------"
+echo ""
+diff -bw -a o2 Suite2.out
+echo ""
+echo "end diff2---------------"
+
+echo "diff3 results:---------------"
+echo ""
+diff -bw -a o3 Suite3.out
+echo ""
+echo "end diff3---------------"
+
+echo "diff4 results:---------------"
+echo ""
+diff -bw -a o4 Suite4.out
+echo ""
+echo "end diff4---------------"
+
+echo "diff5 results:---------------"
+echo ""
+diff -bw -a o5 Suite5.out
+echo ""
+echo "end diff5---------------"
+
+echo "diff6 results:---------------"
+echo ""
+diff -bw -a o6 Suite6.out
+echo ""
+echo "end diff6---------------"
+
+echo "diff7 results:---------------"
+echo ""
+diff -bw -a o7 Suite7.out
+echo ""
+echo "end diff7---------------"
+
+echo "diff8 results:---------------"
+echo ""
+diff -bw -a o8 Suite8.out
+echo ""
+echo "end diff8---------------"
+
+echo ""
+
+echo "remaking"
+make
+echo "done making"
+
+echo "line-length style checking"
+../../lab1/a.out Calculon.c
+../../lab1/a.out Calculon.h
+
+echo "testing complete! :)"
+
+ ~grade-cstaley/bin/turnin ~grade-cstaley/357/Calculon/turnin Calculon.c Calculon.h Makefile
+echo "done turning in"
+
+echo "CSstyle checking"
+java -jar CStyle.jar Calculon.c
+java -jar CStyle.jar Calculon.h

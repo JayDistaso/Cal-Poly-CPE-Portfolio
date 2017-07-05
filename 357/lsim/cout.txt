@@ -1,0 +1,20 @@
+argv was ./Cell
+argv was S2
+argv was D0
+argv was O4
+value = 34.500000
+in end = 
+argv was V34.500000
+cellID = 0
+simTime = 2
+outputs = 1
+intputs = 0
+fixedVal = 34.500000
+fixed = 1
+
+report val = 34.500000
+report val = 34.500000
+report val = 34.500000
+Result from 0, step 0: 34.500
+Result from 0, step 1: 34.500
+Result from 0, step 2: 34.500

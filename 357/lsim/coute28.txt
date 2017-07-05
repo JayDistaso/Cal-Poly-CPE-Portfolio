@@ -1,0 +1,4 @@
+Error: Child 0 exited with 1
+Error: Child 1 exited with 1
+Error: Child 2 exited with 1
+Your program exited with nonzero code 1

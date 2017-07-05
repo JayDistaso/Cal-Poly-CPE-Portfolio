@@ -1,0 +1,9 @@
+malloc: malloc.c malloc.h
+	gcc malloc.h malloc.c -o malloc -Wall -Werror -O3
+static: 
+	gcc malloc.c -Wall -Werror -O3 -c
+	ar r malloc.a malloc.o
+dynamic: 
+	gcc malloc.c -Wall -Werror -O3 -c
+	gcc -shared -fpic -o malloc.so malloc.o
+fi

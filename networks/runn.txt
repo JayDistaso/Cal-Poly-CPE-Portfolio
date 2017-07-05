@@ -1,0 +1,52 @@
+#!/bin/bash 
+echo "Running script"
+make
+echo ""
+
+echo "Starting diff of ARP-------------------"
+./trace ArpTest.pcap > myarp.out
+diff -B myarp.out ArpTest.out 
+echo "Done diffing ARP-----------------------"
+
+echo "Starting diff for UDP------------------"
+./trace UDPfile.pcap > myUDP.out
+diff -B myUDP.out UDPfile.out
+echo "Done diffing UDP-----------------------"
+
+echo "Starting diff for ping-----------------"
+./trace PingTest.pcap > myPingTest.out
+diff -B myPingTest.out PingTest.out
+echo "Done diffing PingTest------------------"
+
+echo "Starting diff for http-----------------"
+./trace Http.pcap > myHttp.out
+diff -B myHttp.out Http.out
+echo "Done diffing http----------------------"
+
+echo "Starting diff for ipbadchecksum--------"
+./trace IP_bad_checksum.pcap > mybadIP.out
+diff -B mybadIP.out IP_bad_checksum.out
+echo "Done diffing ipbadchecksum-------------"
+
+echo "Starting diff for smallTCP-------------"
+./trace smallTCP.pcap > mytcp.out
+diff -B mytcp.out smallTCP.out
+echo "done diffing tcp-----------------------"
+
+echo "Starting diff for tcp_bad_checksum-----"
+./trace TCP_bad_checksum.pcap > mybadtcp.out
+diff -B mybadtcp.out TCP_bad_checksum.out
+echo "done diffing badtcp--------------------"
+
+echo "diffing largemix-----------------------"
+./trace largeMix.pcap > mylarge.out
+diff -B mylarge.out largeMix.out
+echo "done diffing large---------------------"
+
+echo "diffing large2-------------------------"
+./trace largeMix2.pcap > mylargeMix2.out
+diff -B mylargeMix2.out largeMix2.out
+echo "done diffing largemix2-----------------"
+
+make clean
+make

@@ -1,0 +1,17 @@
+typedef struct Rule {
+   char *name;
+   int capacityDepends;
+   int capacityActions;
+   int numDepends;
+   int numActions;
+   char **depends;
+   char **actions;
+   int index;
+} Rule;
+
+struct Rule *makeRule(char*, int);
+void printRule(Rule*);
+int findRule (Rule**, char*, int);
+int executeDepends(Rule**, int, int, int, int, int);
+int file_exist (char*); 
+

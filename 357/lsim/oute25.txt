@@ -1,0 +1,11 @@
+Error: Child 0 exited with 1
+Error: Child 1 exited with 1
+Error: Child 2 exited with 1
+Error: Child 3 exited with 1
+Error: Child 4 exited with 1
+Error: Child 5 exited with 1
+Error: Child 6 exited with 1
+Error: Child 7 exited with 1
+Error: Child 8 exited with 1
+Error: Child 9 exited with 1
+Your program exited with nonzero code 1

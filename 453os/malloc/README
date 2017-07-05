@@ -1,0 +1,14 @@
+Justin Distaso
+Cal Poly User: jdistaso
+10/4/16
+
+Files needed: malloc.c malloc.h 
+
+Passes test harness
+
+Makefile responds well to make, make malloc, make intel-all
+
+Don't forget to set your paths as needed.
+
+This program should meet spec, it could be more efficent but alas other classes call
+

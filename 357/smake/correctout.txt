@@ -1,0 +1,8 @@
+Echo
+main built
+Echo
+echo "Echo"
+gcc -c main.c
+echo "main built"
+echo "Echo"
+gcc -o main main.o other.o

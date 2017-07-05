@@ -1,0 +1,685 @@
+
+
+-----------------
+3) unpartitioned, files:
+     minls /home/pn-cs453/Given/Asgn5/Images/TestImage 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+/:^M
+drwxrwxrwx       384 .^M
+drwxrwxrwx       384 ..^M
+-rw-r--r--     73991 Other^M
+drwxr-xr-x      3200 src^M
+-rw-r--r--        11 Hello^M
+Child process (12876) exited due to SIGSEGV.^M
+
+
+-----------------
+5) partitioned, part 0:
+     minls -p0 /home/pn-cs453/Given/Asgn5/Images/Partitioned 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Bad command line argument^M
+
+
+-----------------
+6) partitioned, part 1:
+     minls -p1 /home/pn-cs453/Given/Asgn5/Images/Partitioned 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Bad command line argument^M
+
+
+-----------------
+7) partitioned, part 2:
+     minls -p2 /home/pn-cs453/Given/Asgn5/Images/Partitioned 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Bad command line argument^M
+
+
+-----------------
+8) partitioned, part 3:
+     minls -p3 /home/pn-cs453/Given/Asgn5/Images/Partitioned 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Bad command line argument^M
+
+
+-----------------
+12) subpart., good sub:
+     minls -p0 -s0 /home/pn-cs453/Given/Asgn5/Images/HardDisk 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+superblock magic number (0000) does not match minix magic number (0x4d5a)^M
+
+
+-----------------
+14) unpartitioned, w/filename:
+     minls /home/pn-cs453/Given/Asgn5/Images/TestImage /Hello 
+-----------------
+Test program output:
+/Hello:^M
+Diffs: ( < Reference > Testfile ):
+1c1
+< -rw-r--r--        11 /Hello^M
+---
+> /Hello:^M
+
+
+-----------------
+15) partitioned, w/filename, p0:
+     minls -p0 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+fopen: No such file or directory^M
+
+
+-----------------
+16) partitioned, w/filename, p1:
+     minls -p1 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+fopen: No such file or directory^M
+
+
+-----------------
+17) partitioned, w/filename, p2:
+     minls -p2 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+fopen: No such file or directory^M
+
+
+-----------------
+18) partitioned, w/filename, p3:
+     minls -p3 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+fopen: No such file or directory^M
+
+
+-----------------
+19) subpart., no filename s0:
+     minls -p0 -s0 /home/pn-cs453/Given/Asgn5/Images/HardDisk 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+superblock magic number (0000) does not match minix magic number (0x4d5a)^M
+
+
+-----------------
+20) subpart., no filename s2:
+     minls -p0 -s2 /home/pn-cs453/Given/Asgn5/Images/HardDisk 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+superblock magic number (0000) does not match minix magic number (0x4d5a)^M
+
+
+-----------------
+21) subpart., w/filename:
+     minls -p0 -s2 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+fopen: No such file or directory^M
+
+
+-----------------
+23) directories:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Files 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13009) exited due to SIGSEGV.^M
+
+
+-----------------
+24) directories:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zones 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13017) exited due to SIGSEGV.^M
+
+
+-----------------
+25) directories:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zone 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13025) exited due to SIGSEGV.^M
+
+
+-----------------
+26) directories:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Files/0007_Zones 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13033) exited due to SIGSEGV.^M
+
+
+-----------------
+27) directories:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Files/0010_Zones 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13041) exited due to SIGSEGV.^M
+
+
+-----------------
+28) directories:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Files/1032_Zones 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13049) exited due to SIGSEGV.^M
+
+
+-----------------
+29) directories:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/a/b/c/d/e/i/j/k/Files 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13057) exited due to SIGSEGV.^M
+
+
+-----------------
+30) directories:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13065) exited due to SIGSEGV.^M
+
+
+-----------------
+31) multi-zone directory:
+     minls /home/pn-cs453/Given/Asgn5/Images/BigDirectories 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+/:^M
+drwxrwxrwx     21824 .^M
+drwxrwxrwx     21824 ..^M
+-rwxr--r--       190 doit^M
+drwxr-xr-x       128 level1-000^M
+drwxr-xr-x       128 level1-001^M
+drwxr-xr-x       128 level1-002^M
+drwxr-xr-x       128 level1-003^M
+drwxr-xr-x       128 level1-004^M
+drwxr-xr-x       128 level1-005^M
+drwxr-xr-x       128 level1-006^M
+drwxr-xr-x       128 level1-007^M
+drwxr-xr-x       128 level1-008^M
+drwxr-xr-x       128 level1-009^M
+drwxr-xr-x       128 level1-010^M
+drwxr-xr-x       128 level1-011^M
+drwxr-xr-x       128 level1-012^M
+drwxr-xr-x       128 level1-013^M
+drwxr-xr-x       128 level1-014^M
+drwxr-xr-x       128 level1-015^M
+drwxr-xr-x       128 level1-016^M
+drwxr-xr-x       128 level1-017^M
+drwxr-xr-x       128 level1-018^M
+drwxr-xr-x       128 level1-019^M
+drwxr-xr-x       128 level1-020^M
+drwxr-xr-x       128 level1-021^M
+drwxr-xr-x       128 level1-022^M
+drwxr-xr-x       128 level1-023^M
+drwxr-xr-x       128 level1-024^M
+drwxr-xr-x       128 level1-025^M
+drwxr-xr-x       128 level1-026^M
+drwxr-xr-x       128 level1-027^M
+drwxr-xr-x       128 level1-028^M
+drwxr-xr-x       128 level1-029^M
+drwxr-xr-x       128 level1-030^M
+drwxr-xr-x       128 level1-031^M
+drwxr-xr-x       128 level1-032^M
+drwxr-xr-x       128 level1-033^M
+drwxr-xr-x       128 level1-034^M
+drwxr-xr-x       128 level1-035^M
+drwxr-xr-x       128 level1-036^M
+drwxr-xr-x       128 level1-037^M
+drwxr-xr-x       128 level1-038^M
+drwxr-xr-x       128 level1-039^M
+drwxr-xr-x       128 level1-040^M
+drwxr-xr-x       128 level1-041^M
+drwxr-xr-x       128 level1-042^M
+drwxr-xr-x       128 level1-043^M
+drwxr-xr-x       128 level1-044^M
+drwxr-xr-x       128 level1-045^M
+drwxr-xr-x       128 level1-046^M
+drwxr-xr-x       128 level1-047^M
+drwxr-xr-x       128 level1-048^M
+drwxr-xr-x       128 level1-049^M
+drwxr-xr-x       128 level1-050^M
+drwxr-xr-x       128 level1-051^M
+drwxr-xr-x       128 level1-052^M
+drwxr-xr-x       128 level1-053^M
+drwxr-xr-x       128 level1-054^M
+drwxr-xr-x       128 level1-055^M
+drwxr-xr-x       128 level1-056^M
+drwxr-xr-x       128 level1-057^M
+drwxr-xr-x       128 level1-058^M
+drwxr-xr-x       128 level1-059^M
+drwxr-xr-x       128 level1-060^M
+Child process (13073) exited due to SIGSEGV.^M
+
+
+-----------------
+32) multi-zone directory (file):
+     minls /home/pn-cs453/Given/Asgn5/Images/BigDirectories LastFile 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13081) exited due to SIGSEGV.^M
+
+
+-----------------
+33) indirect directory:
+     minls /home/pn-cs453/Given/Asgn5/Images/BigIndirectDirs Level1/Level2 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Level1/Level2:^M
+drwxr-xr-x     49024 .^M
+drwxr-xr-x       192 ..^M
+drwxr-xr-x       128 BigDir^M
+-rw-r--r--         0 file_000^M
+-rw-r--r--         0 file_001^M
+-rw-r--r--         0 file_002^M
+-rw-r--r--         0 file_003^M
+-rw-r--r--         0 file_004^M
+-rw-r--r--         0 file_005^M
+-rw-r--r--         0 file_006^M
+-rw-r--r--         0 file_007^M
+-rw-r--r--         0 file_010^M
+-rw-r--r--         0 file_011^M
+-rw-r--r--         0 file_012^M
+-rw-r--r--         0 file_013^M
+-rw-r--r--         0 file_014^M
+-rw-r--r--         0 file_015^M
+-rw-r--r--         0 file_016^M
+-rw-r--r--         0 file_017^M
+-rw-r--r--         0 file_020^M
+-rw-r--r--         0 file_021^M
+-rw-r--r--         0 file_022^M
+-rw-r--r--         0 file_023^M
+-rw-r--r--         0 file_024^M
+-rw-r--r--         0 file_025^M
+-rw-r--r--         0 file_026^M
+-rw-r--r--         0 file_027^M
+-rw-r--r--         0 file_030^M
+-rw-r--r--         0 file_031^M
+-rw-r--r--         0 file_032^M
+-rw-r--r--         0 file_033^M
+-rw-r--r--         0 file_034^M
+-rw-r--r--         0 file_035^M
+-rw-r--r--         0 file_036^M
+-rw-r--r--         0 file_037^M
+-rw-r--r--         0 file_040^M
+-rw-r--r--         0 file_041^M
+-rw-r--r--         0 file_042^M
+-rw-r--r--         0 file_043^M
+-rw-r--r--         0 file_044^M
+-rw-r--r--         0 file_045^M
+-rw-r--r--         0 file_046^M
+-rw-r--r--         0 file_047^M
+-rw-r--r--         0 file_050^M
+-rw-r--r--         0 file_051^M
+-rw-r--r--         0 file_052^M
+-rw-r--r--         0 file_053^M
+-rw-r--r--         0 file_054^M
+-rw-r--r--         0 file_055^M
+-rw-r--r--         0 file_056^M
+-rw-r--r--         0 file_057^M
+-rw-r--r--         0 file_060^M
+-rw-r--r--         0 file_061^M
+-rw-r--r--         0 file_062^M
+-rw-r--r--         0 file_063^M
+-rw-r--r--         0 file_064^M
+-rw-r--r--         0 file_065^M
+-rw-r--r--         0 file_066^M
+-rw-r--r--         0 file_067^M
+-rw-r--r--         0 file_070^M
+-rw-r--r--         0 file_071^M
+-rw-r--r--         0 file_072^M
+-rw-r--r--         0 file_073^M
+-rw-r--r--         0 file_074^M
+Child process (13089) exited due to SIGSEGV.^M
+
+
+-----------------
+34) indirect directory (file):
+     minls /home/pn-cs453/Given/Asgn5/Images/BigIndirectDirs Level1/Level2/LastFile 
+-----------------
+Program exited with bad status: 256
+
+Test program output:
+File at Level1/Level2/LastFile could not be found^M
+
+
+-----------------
+35) directories-deleted:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Deleted 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13106) exited due to SIGSEGV.^M
+
+
+-----------------
+36) directories-ok file:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Deleted/File-10 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13114) exited due to SIGSEGV.^M
+
+
+-----------------
+39) 1k blocks. file.:
+     minls /home/pn-cs453/Given/Asgn5/Images/SmallBlocks--1k DirTwo/FileTwo  
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+DirTwo/FileTwo:^M
+-rwxr-xr-x     20596 FileTwo^M
+drwxrwxrwx       256 ..^M
+-rwxr-xr-x     20596 FileTwo^M
+-rwxr-xr-x      6552 FileOne^M
+Child process (13135) exited due to SIGSEGV.^M
+
+
+-----------------
+41) 16k zones. file.:
+     minls /home/pn-cs453/Given/Asgn5/Images/BigZones-16k /DirOne/FileTwo 
+-----------------
+Test program output:
+/DirOne/FileTwo:^M
+-rwxr-xr-x       181 FileTwo^M
+drwxrwxrwx       256 ..^M
+Diffs: ( < Reference > Testfile ):
+1c1,3
+< -rwxr-xr-x       181 /DirOne/FileTwo^M
+---
+> /DirOne/FileTwo:^M
+> -rwxr-xr-x       181 FileTwo^M
+> drwxrwxrwx       256 ..^M
+
+
+-----------------
+43) 64k zones. file:
+     minls /home/pn-cs453/Given/Asgn5/Images/ReallyBigZones-64k DirTwo/FileOne 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+DirTwo/FileOne:^M
+-rwxr-xr-x      6552 FileOne^M
+drwxrwxrwx       256 ..^M
+-rwxr-xr-x     20596 FileTwo^M
+-rwxr-xr-x      6552 FileOne^M
+Child process (13168) exited due to SIGSEGV.^M
+
+
+-----------------
+44) 64k zones. longpath:
+     minls /home/pn-cs453/Given/Asgn5/Images/ReallyBigZones-64k /./.././../DirTwo/FileOne 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+/./.././../DirTwo/FileOne:^M
+-rwxr-xr-x      6552 FileOne^M
+drwxrwxrwx       256 ..^M
+-rwxr-xr-x     20596 FileTwo^M
+-rwxr-xr-x      6552 FileOne^M
+Child process (13176) exited due to SIGSEGV.^M
+
+
+-----------------
+45) Permissions 777:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Permissions/777 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13184) exited due to SIGSEGV.^M
+
+
+-----------------
+46) Permissions 755:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Permissions/755 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13192) exited due to SIGSEGV.^M
+
+
+-----------------
+47) Permissions 753:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Permissions/753 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13200) exited due to SIGSEGV.^M
+
+
+-----------------
+48) Permissions 357:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Permissions/357 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13208) exited due to SIGSEGV.^M
+
+
+-----------------
+49) Permissions 000:
+     minls /home/pn-cs453/Given/Asgn5/Images/Files /Permissions/000 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
+Child process (13216) exited due to SIGSEGV.^M
+
+
+-----------------
+50) unpartitioned, w/filename:
+     minget /home/pn-cs453/Given/Asgn5/Images/TestImage /Hello 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< Hi, there.^M
+
+
+-----------------
+51) partitioned, w/filename, p0:
+     minget -p0 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< This is partition 0^M
+
+
+-----------------
+52) partitioned, w/filename, p1:
+     minget -p1 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< This is partition 1^M
+
+
+-----------------
+53) partitioned, w/filename, p2:
+     minget -p2 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< This is partition 2^M
+
+
+-----------------
+54) partitioned, w/filename, p3:
+     minget -p3 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< This is partition 3^M
+
+
+-----------------
+55) subpart., no filename s0:
+     minget -p0 -s0 /home/pn-cs453/Given/Asgn5/Images/HardDisk 
+-----------------
+ This test was expected to fail, but reports success.
+ Perhaps a bad exit status?
+
+
+-----------------
+56) subpart., no filename s2:
+     minget -p0 -s2 /home/pn-cs453/Given/Asgn5/Images/HardDisk 
+-----------------
+ This test was expected to fail, but reports success.
+ Perhaps a bad exit status?
+
+
+-----------------
+57) subpart., w/filename:
+     minget -p0 -s2 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1,5d0
+< Hello.^M
+< ^M
+< If you can read this, you're getting somewhere.^M
+< ^M
+< Happy hacking.^M
+
+
+-----------------
+58) subpart., w/bad filename:
+     minget -p0 -s0 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message 
+-----------------
+ This test was expected to fail, but reports success.
+ Perhaps a bad exit status?
+
+
+-----------------
+59) unpartitioned, w/filename:
+     minget /home/pn-cs453/Given/Asgn5/Images/TestImage /Hello /dev/stdout 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< Hi, there.^M
+
+
+-----------------
+60) partitioned, w/filename, p0:
+     minget -p0 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< This is partition 0^M
+
+
+-----------------
+61) partitioned, w/filename, p1:
+     minget -p1 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< This is partition 1^M
+
+
+-----------------
+62) partitioned, w/filename, p2:
+     minget -p2 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< This is partition 2^M
+
+
+-----------------
+63) partitioned, w/filename, p3:
+     minget -p3 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
+-----------------
+Test program output:
+Diffs: ( < Reference > Testfile ):
+1d0
+< This is partition 3^M
+
+
+-----------------
+64) subpart., no filename s0:
+     minget -p0 -s0 /home/pn-cs453/Given/Asgn5/Images/HardDisk /dev/stdout 
+-----------------
+ This test was expected to fail, but reports success.
+ Perhaps a bad exit status?
+
+
+-----------------
+65) subpart., no filename s2:
+     minget -p0 -s2 /home/pn-cs453/Given/Asgn5/Images/HardDisk /dev/stdout 
+-----------------
+ This test was expected to fail, but reports success.
+ Perhaps a bad exit status?

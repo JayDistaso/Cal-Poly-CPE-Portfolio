@@ -1,0 +1,27 @@
+#!/bin/bash
+echo "Running script"
+echo "Backing up"
+
+echo "Scrubbing carriage returns"
+tr -d '\r' < malloc.c > malloc.scrub
+tr -d '\r' < malloc.scrub > malloc.c
+tr -d '\r' < malloc.h > malloc.scrub
+tr -d '\r' < malloc.scrub > malloc.h
+
+make malloc
+
+echo "Made"
+echo "Running tests"
+
+make tryme > trymeout.txt
+~pn-cs453/demos/tryAsgn1 > jsoutfile.txt
+
+
+echo "testing complete! :)"
+
+echo "CSstyle checking"
+java -jar CStyle.jar malloc.h
+java -jar CStyle.jar malloc.c
+
+make
+

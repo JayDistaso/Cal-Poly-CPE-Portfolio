@@ -1,0 +1,47 @@
+5
+5
+5
+5
+5
+5
+5
+5
+5
+5
+5
+5
+7
+8
+9
+10
+11
+Echo
+main built
+Echo
+main built
+Echo
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "5"
+echo "7"
+echo "8"
+echo "9"
+echo "10"
+echo "11"
+echo "Echo"
+gcc -c main.c
+echo "main built"
+echo "Echo"
+gcc -c main.c
+echo "main built"
+echo "Echo"
+gcc -o main main.o other.o

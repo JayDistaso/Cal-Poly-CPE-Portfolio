@@ -1,0 +1,194 @@
+#!/bin/bash
+echo "Running script"
+make all
+echo "Made"
+echo "Running User tests"
+echo "Running one cell for one steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C1 S1 < /dev/null > out1.txt
+sort out1.txt
+echo "Running two cells for two steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C2 S2 < /dev/null > out2.txt
+sort out2.txt
+echo "Running three cells for three steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C3 S3 < /dev/null > out3.txt
+sort out3.txt
+echo "Running four cells for four steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C4 S4 < /dev/null > out4.txt
+sort out4.txt
+echo "Running 5 cells for 5 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C5 S5 < /dev/null > out5.txt
+sort out5.txt
+echo "Running 6 cells for 6 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C6 S6 < /dev/null > out6.txt
+sort out6.txt
+echo "Running 7 cells for 7 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C7 S7 < /dev/null > out7.txt
+sort out7.txt
+echo "Running 10 cells for 10 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C10 S10 < /dev/null > out8.txt
+sort out8.txt
+echo "Running 20 cells for 20 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C20 S20 < /dev/null > out9.txt
+sort out9.txt
+echo "Running 30 cells for 30 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C30 S30 < /dev/null > out10.txt
+sort out10.txt
+echo "Running 40 cells for 40 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C40 S40 < /dev/null > out11.txt
+sort out11.txt
+echo "Running 50 cells for 50 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C50 S50 < /dev/null > out12.txt
+sort out12.txt
+
+echo "End User Tests"
+echo "Start instructor tests"
+cd lsimINST
+echo "Running one cell for one steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C1 S1 < /dev/null > ../cout1.txt
+sort ../cout1.txt
+echo "Running two cells for two steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C2 S2 < /dev/null > ../cout2.txt
+sort ../cout2.txt
+echo "Running three cells for three steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C3 S3 < /dev/null > ../cout3.txt
+sort ../cout3.txt
+echo "Running four cells for four steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C4 S4 < /dev/null > ../cout4.txt
+sort ../cout4.txt
+echo "Running 5 cells for 5 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C5 S5 < /dev/null > ../cout5.txt
+sort ../cout5.txt
+echo "Running 6 cells for 6 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C6 S6 < /dev/null > ../cout6.txt
+sort ../cout6.txt
+echo "Running 7 cells for 7 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C7 S7 < /dev/null > ../cout7.txt
+sort ../cout7.txt
+echo "Running 10 cells for 10 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C10 S10 < /dev/null > ../cout8.txt
+sort ../cout8.txt
+echo "Running 20 cells for 20 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C20 S20 < /dev/null > ../cout9.txt
+sort ../cout9.txt
+echo "Running 30 cells for 30 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C30 S30 < /dev/null > ../cout10.txt
+sort ../cout10.txt
+echo "Running 40 cells for 40 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C40 S40 < /dev/null > ../cout11.txt
+sort ../cout11.txt
+echo "Running 50 cells for 50 steps"
+~grade-cstaley/bin/SafeRun -o400000 -t700 -T6000 -p300 ./LinearSim  C50 S50 < /dev/null > ../cout12.txt
+sort ../cout12.txt
+echo "diff1 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out1.txt cout1.txt
+
+echo ""
+echo ""
+echo "end diff1---------------"
+echo "diff2 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out2.txt cout2.txt
+
+echo ""
+echo ""
+echo "end diff2---------------"
+echo "diff3 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out3.txt cout3.txt
+
+echo ""
+echo ""
+echo "end diff3---------------"
+echo "diff4 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out4.txt cout4.txt
+
+echo ""
+echo ""
+echo "end diff4---------------"
+echo "diff5 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out5.txt cout5.txt
+
+echo ""
+echo ""
+echo "end diff5---------------"
+echo "diff6 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out6.txt cout6.txt
+
+echo ""
+echo ""
+echo "end diff6---------------"
+echo "diff7 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out7.txt cout7.txt
+
+echo ""
+echo ""
+echo "end diff7---------------"
+echo "diff8 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out8.txt cout8.txt
+
+echo ""
+echo ""
+echo "end diff8---------------"
+echo "diff9 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out9.txt cout9.txt
+
+echo ""
+echo ""
+echo "end diff9---------------"
+echo "diff10 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out10.txt cout10.txt
+
+echo ""
+echo ""
+echo "end diff10---------------"
+echo "diff11 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out11.txt cout11.txt
+
+echo ""
+echo ""
+echo "end diff11---------------"
+echo "diff12 results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out12.txt cout12.txt
+
+echo ""
+echo ""
+echo "end diff12---------------"
+echo ""
+make force
+
+echo "testing complete! :)"
+

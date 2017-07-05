@@ -1,0 +1,22 @@
+includes
+char mystery() //read line
+char *temp, *line - calloc1,1
+ints
+while(ch = getchar() && ch!=EOF && ch!='\n'
+temp = line
+line=calloc(len+2,1)
+strcpy(line,temp)
+free(temp)
+line[len++] = ch
+}
+return ch == EOF && LEN == 0 NULL: line
+
+gets a line of variable length and reads it, dynammically increasing size
+reads lines of 0 to infinite lnegth
+or allocate big and fill and keep doubling it since reallocating is slow
+
+main
+char *line
+while(NULL != (line = Mystfunc())
+print line
+free line

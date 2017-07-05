@@ -1,0 +1,4 @@
+Echo
+theres a bad enter
+echo "Echo"
+echo "theres a bad enter"

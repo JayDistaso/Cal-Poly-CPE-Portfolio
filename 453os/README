@@ -1,0 +1,13 @@
+Author: Justin Distaso (jdistaso) 9/27/16
+
+Summary:
+This is a program that that launches the pipeline “ls | sort -r > outfile” and
+waits for it to terminate. When it is finished, outfile should consist of a listing of the files in
+the current directory in reverse alphabetical order.
+
+Return Value:
+If something fails (a pipe, opening a file, a fork, or a child process does not exit successfully)
+then this program will return non-zero. Else this program will return 0;
+
+To build:
+"make pipeit"

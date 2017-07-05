@@ -1,0 +1,7 @@
+gcc -Wall -g -c -o tryme.o tryme.c
+gcc -L ./lib64 -lmalloc -o tryme tryme.o
+echo Done Making
+Done Making
+echo "------------"
+------------
+./tryme

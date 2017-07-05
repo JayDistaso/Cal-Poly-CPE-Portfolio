@@ -1,0 +1,212 @@
+#!/bin/bash
+echo "Running script"
+gcc smake.c smake.h -Wall -Werror
+echo "gcc ran"
+echo "Running no command line arguments"
+./a.out > out.txt
+~grade-cstaley/357/SMake/32Bit/smake > correctout.txt
+echo "diff results:---------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out.txt correctout.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+echo "Running one command line argument"
+./a.out echo > out1.txt
+~grade-cstaley/357/SMake/32Bit/smake echo > correctout1.txt
+echo "diff1 results-------------:"
+echo ""
+echo ""
+echo ""
+diff -bw -a out1.txt correctout1.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+
+echo "Running rule with many actions"
+./a.out rule5 > out2.txt
+~grade-cstaley/357/SMake/32Bit/smake rule5 > correctout2.txt
+echo "diff2 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw -a out2.txt correctout2.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+
+echo "Running rule with many dependecys"
+./a.out rule6 > out3.txt
+~grade-cstaley/357/SMake/32Bit/smake rule6 > correctout3.txt
+echo "diff3 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out3.txt correctout3.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+
+echo "Running rule that calls dependency whos action fails"
+./a.out test > out4.txt
+~grade-cstaley/357/SMake/32Bit/smake test > correctout4.txt
+echo "diff4 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out4.txt correctout4.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+
+echo "Running test where target dependency is rule that does not run"
+touch touched.c
+./a.out test1.c > out5.txt
+touch touched.c
+~grade-cstaley/357/SMake/32Bit/smake test1.c > correctout5.txt
+echo "diff5 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out5.txt correctout5.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+
+
+echo "Running test to find extra echo"
+./a.out echotest > out6.txt
+~grade-cstaley/357/SMake/32Bit/smake echotest > correctout6.txt
+echo "diff6 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out6.txt correctout6.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+echo "Running test for dumb colon"
+./a.out badrule > out7.txt
+~grade-cstaley/357/SMake/32Bit/smake badrule > correctout7.txt
+echo "diff7 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out7.txt correctout7.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+echo "Running test for no action/depends"
+./a.out blank > out8.txt
+~grade-cstaley/357/SMake/32Bit/smake blank > correctout8.txt
+echo "diff8 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out8.txt correctout8.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+
+echo "Running test for more colon nonesense"
+./a.out badrule2 > out9.txt
+~grade-cstaley/357/SMake/32Bit/smake badrule2 > correctout9.txt
+echo "diff9 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out9.txt correctout9.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+echo "Running test for more colon nonesense colins in depends"
+./a.out badrule3 > out10.txt
+~grade-cstaley/357/SMake/32Bit/smake badrule3 > correctout10.txt
+echo "diff10 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out10.txt correctout10.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+echo "Running test for no space before rule name"
+./a.out notinspecs > out11.txt
+~grade-cstaley/357/SMake/32Bit/smake notinspecs > correctout11.txt
+echo "diff11 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out11.txt correctout11.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+echo "Running test for much space before rule name"
+./a.out muchspace > out12.txt
+~grade-cstaley/357/SMake/32Bit/smake muchspace > correctout12.txt
+echo "diff12 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out12.txt correctout12.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+echo "Running test for tab before rule name"
+./a.out tab > out13.txt
+~grade-cstaley/357/SMake/32Bit/smake tab > correctout13.txt
+echo "diff13 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out13.txt correctout13.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+echo "Running test for weird enters"
+./a.out enter > out14.txt
+~grade-cstaley/357/SMake/32Bit/smake enter > correctout14.txt
+echo "diff14 results:-------------"
+echo ""
+echo ""
+echo ""
+diff -bw out14.txt correctout14.txt
+
+echo ""
+echo ""
+echo "end diff---------------"
+
+
+
+gcc smake.c smake.h -Wall -Werror
+
+echo "done" 
